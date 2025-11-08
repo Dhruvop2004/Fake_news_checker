@@ -1,4 +1,20 @@
 # preprocessing data 
+import nltk
+import os
+
+# Define a writable directory for NLTK data
+nltk_data_dir = "/opt/render/nltk_data"
+os.makedirs(nltk_data_dir, exist_ok=True)
+
+# Tell NLTK to look there
+nltk.data.path.append(nltk_data_dir)
+
+# Download resources if missing
+for pkg in ["wordnet", "omw-1.4"]:
+    try:
+        nltk.data.find(f"corpora/{pkg}")
+    except LookupError:
+        nltk.download(pkg, download_dir=nltk_data_dir)
 
 
 # removing htlm tags
