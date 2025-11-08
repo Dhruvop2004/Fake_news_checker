@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: TruthScope
+    env: python
+    plan: free
+
+    # 🌱 Build phase
+    buildCommand: |
+      echo "🚀 Upgrading pip and installing dependencies..."
+      pip install --upgrade pip setuptools wheel
+      pip install -r requirements.txt
+      echo "📦 Downloading spaCy model (if required)..."
+      python -m spacy download en_core_web_sm || echo "⚠️ Skipping spaCy model download if not needed"
+      echo "✅ Build complete."
+
+    # 🚀 Start Streamlit app
+    startCommand: streamlit run app.py --server.port=$PORT --server.address=0.0.0.0 --server.headless=true
+
+    # ⚙️ Environment variables
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: PIP_NO_CACHE_DIR
+        value: "true"
+      - key: STREAMLIT_SERVER_ENABLECORS
+        value: "false"
+      - key: STREAMLIT_SERVER_ENABLEXsrfProtection
+        value: "false"
+      - key: STREAMLIT_SERVER_HEADLESS
+        value: "true"
+
+    autoDeploy: true
