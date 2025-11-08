@@ -6,3 +6,9 @@ joblib==1.5.2
 beautifulsoup4==4.14.2
 numpy>=1.26.0,<3.0.0
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+import nltk
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
+    nltk.download('omw-1.4')
